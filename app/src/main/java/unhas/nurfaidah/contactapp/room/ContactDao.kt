@@ -6,7 +6,7 @@ import androidx.room.*
 interface ContactDao {
 
     @Insert
-    fun addContact(contact: Contact)
+    suspend fun addContact(contact: Contact)
 
     @Update
     suspend fun updateContact(contact: Contact)
@@ -15,5 +15,5 @@ interface ContactDao {
     suspend fun deleteContact(contact: Contact)
 
     @Query("SELECT * FROM contact")
-    suspend fun getContacts(contact: Contact): List<Contact>
+    fun getContacts(contact: Contact): List<Contact>
 }
