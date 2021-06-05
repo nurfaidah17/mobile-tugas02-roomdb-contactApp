@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        loadContact()
+    }
+
+    fun loadContact() {
         CoroutineScope(Dispatchers.IO).launch {
             val contacts = db.contactDao().getContacts()
             Log.d("MainActivity", "dbResponse: $contacts")
@@ -61,6 +66,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onUpdate(contact: Contact) {
                 intentEdit(contact.id,Constant.TYPE_UPDATE)
+            }
+            override fun onDelete(contact: Contact) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    db.contactDao().deleteContact(contact)
+                    loadContact()
+                }
             }
         })
         list_contact.apply {

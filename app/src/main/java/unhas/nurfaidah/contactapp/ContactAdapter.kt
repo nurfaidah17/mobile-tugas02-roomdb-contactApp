@@ -28,7 +28,7 @@ class ContactAdapter (private val contacts: ArrayList<Contact>, private val list
             listener.onUpdate(contact)
         }
         holder.view.icon_delete.setOnClickListener {
-
+            listener.onDelete(contact)
         }
     }
 
@@ -43,5 +43,6 @@ class ContactAdapter (private val contacts: ArrayList<Contact>, private val list
     interface OnAdapterListener {
         fun onClick(contact: Contact)
         fun onUpdate(contact: Contact)
+        fun onDelete(contact: Contact)
     }
 }
