@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,7 +45,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        contactAdapter = ContactAdapter(arrayListOf())
+        contactAdapter = ContactAdapter(arrayListOf(), object : ContactAdapter.OnAdapterListener {
+            override fun onClick(contact: Contact) {
+                Toast.makeText(applicationContext, contact.nama_kontak, Toast.LENGTH_SHORT).show()
+            }
+        })
         list_contact.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = contactAdapter

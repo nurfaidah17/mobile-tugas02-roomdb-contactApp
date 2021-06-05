@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.adapter_contact.view.*
 import unhas.nurfaidah.contactapp.room.Contact
 
-class ContactAdapter (private val contacts: ArrayList<Contact>) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class ContactAdapter (private val contacts: ArrayList<Contact>, private val listener: OnAdapterListener)
+    : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(
@@ -20,6 +21,9 @@ class ContactAdapter (private val contacts: ArrayList<Contact>) : RecyclerView.A
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = contacts[position]
         holder.view.nama_kontak.text = contact.nama_kontak
+        holder.view.nama_kontak.setOnClickListener {
+            listener.onClick(contact)
+        }
     }
 
     class ContactViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -30,4 +34,7 @@ class ContactAdapter (private val contacts: ArrayList<Contact>) : RecyclerView.A
         notifyDataSetChanged()
     }
 
+    interface OnAdapterListener {
+        fun onClick(contact: Contact)
+    }
 }
