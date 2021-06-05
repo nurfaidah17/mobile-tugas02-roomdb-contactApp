@@ -55,7 +55,12 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         contactAdapter = ContactAdapter(arrayListOf(), object : ContactAdapter.OnAdapterListener {
             override fun onClick(contact: Contact) {
+                // read detail contact
                 intentEdit(contact.id,Constant.TYPE_READ)
+            }
+
+            override fun onUpdate(contact: Contact) {
+                intentEdit(contact.id,Constant.TYPE_UPDATE)
             }
         })
         list_contact.apply {

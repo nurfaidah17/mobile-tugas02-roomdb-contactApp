@@ -24,6 +24,12 @@ class ContactAdapter (private val contacts: ArrayList<Contact>, private val list
         holder.view.nama_kontak.setOnClickListener {
             listener.onClick(contact)
         }
+        holder.view.icon_edit.setOnClickListener {
+            listener.onUpdate(contact)
+        }
+        holder.view.icon_delete.setOnClickListener {
+
+        }
     }
 
     class ContactViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -36,5 +42,6 @@ class ContactAdapter (private val contacts: ArrayList<Contact>, private val list
 
     interface OnAdapterListener {
         fun onClick(contact: Contact)
+        fun onUpdate(contact: Contact)
     }
 }
