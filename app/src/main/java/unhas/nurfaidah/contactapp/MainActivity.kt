@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -68,15 +69,31 @@ class MainActivity : AppCompatActivity() {
                 intentEdit(contact.id,Constant.TYPE_UPDATE)
             }
             override fun onDelete(contact: Contact) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    db.contactDao().deleteContact(contact)
-                    loadContact()
-                }
+                deleteDialog(contact)
             }
         })
         list_contact.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = contactAdapter
         }
+    }
+
+    private fun deleteDialog(contact: Contact) {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.apply {
+            setTitle("Konfirmasi")
+            setMessage("Yakin hapus ${contact.nama_kontak} ?")
+            setNegativeButton("Batal") {
+                dialogInterface, i -> dialogInterface.dismiss()
+            }
+            setPositiveButton("Hapus") {
+                dialogInterface, i -> dialogInterface.dismiss()
+                CoroutineScope(Dispatchers.IO).launch {
+                    db.contactDao().deleteContact(contact)
+                    loadContact()
+                }
+            }
+        }
+        alertDialog.show()
     }
 }
