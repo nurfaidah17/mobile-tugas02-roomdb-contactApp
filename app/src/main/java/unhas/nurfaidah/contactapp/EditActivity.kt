@@ -52,6 +52,14 @@ class EditActivity : AppCompatActivity() {
                 finish()
             }
         }
+        button_update.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                db.contactDao().updateContact(
+                        Contact (contactId, edit_nama_kontak.text.toString(), edit_nomor_kontak.text.toString())
+                )
+                finish()
+            }
+        }
     }
 
     fun getContact() {
