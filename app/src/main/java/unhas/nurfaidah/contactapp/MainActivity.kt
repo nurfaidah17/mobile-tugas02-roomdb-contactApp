@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import unhas.nurfaidah.contactapp.room.Constant
 import unhas.nurfaidah.contactapp.room.Contact
 import unhas.nurfaidah.contactapp.room.ContactDB
 
@@ -40,14 +40,22 @@ class MainActivity : AppCompatActivity() {
 
     fun setupListener() {
         button_create.setOnClickListener() {
-            startActivity(Intent(this, EditActivity::class.java))
+            intentEdit(0,Constant.TYPE_CREATE)
         }
+    }
+
+    fun intentEdit(contactId: Int, intentType: Int) {
+        startActivity(
+            Intent(applicationContext, EditActivity::class.java)
+                .putExtra("intent_id", contactId)
+                .putExtra("intent_type", intentType)
+        )
     }
 
     private fun setupRecyclerView() {
         contactAdapter = ContactAdapter(arrayListOf(), object : ContactAdapter.OnAdapterListener {
             override fun onClick(contact: Contact) {
-                Toast.makeText(applicationContext, contact.nama_kontak, Toast.LENGTH_SHORT).show()
+                intentEdit(contact.id,Constant.TYPE_READ)
             }
         })
         list_contact.apply {
