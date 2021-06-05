@@ -8,5 +8,5 @@ data class Contact (
         @PrimaryKey(autoGenerate = true)
         val id: Int,
         val nama_kontak: String,
-        val nomor_kontak: Int
+        val nomor_kontak: String
 )

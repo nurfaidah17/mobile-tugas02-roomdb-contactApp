@@ -23,7 +23,7 @@ class EditActivity : AppCompatActivity() {
         button_save.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 db.contactDao().addContact(
-                        Contact (0,edit_nama_kontak.text.toString(), edit_nomor_kontak.text.length)
+                        Contact (0,edit_nama_kontak.text.toString(), edit_nomor_kontak.text.toString())
                 )
                 finish()
             }
